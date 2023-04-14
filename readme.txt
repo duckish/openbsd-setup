@@ -14,3 +14,21 @@ usermod -G staff YOUR_USERNAME
 
 
 mkdir -p ~/.config/gtk-3.0
+
+## to install and update firmwure, check if firmware is loaded correctly 
+dmesg | grep iwm
+
+## look at this page :
+
+https://www.openbsd.org/faq/faq4.html
+
+and find section :
+
+Bootstrapping Wireless Firmware
+
+## run these commands with doas
+
+doas ifconfig iwm0 -wpakey
+doas ifconfig iwm0 nwid eduroam wpa wpaakms 802.1x up
+doas wpa_supplicant -Bc /etc/wpa_supplicant.conf -D openbsd -i iwm0
+doas dhclient iwm0
